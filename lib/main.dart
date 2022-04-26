@@ -94,7 +94,20 @@ class _main_pageState extends State<main_page> {
 
             if(signed_in_)
               {
-                await GoogleSignIn().disconnect();
+                try {
+                  await GoogleSignIn().disconnect();
+                  signed_in_ = false;
+                  const snackBar = SnackBar(
+                    content: Text('Logged out from Google'),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+                catch(e)
+            {
+              print(e);
+            }
+
+
 
               }
             Navigator.push(context, MaterialPageRoute(builder:(context)=>Login_Page() ));
@@ -120,7 +133,7 @@ class _main_pageState extends State<main_page> {
                 children: [Row(
                   children: [
                     SvgPicture.asset("assets/logo_svg.svg"),
-                    SizedBox(width: 60,),
+                    SizedBox(width: 80,),
                     SvgPicture.asset("assets/SCORE.svg"),
                     SizedBox(width: 4,),
                     Text("Wins     : $wins\nLosses : $loss\nDraw   : $draw",style: GoogleFonts.rajdhani(
@@ -1034,6 +1047,10 @@ class _main_pageState extends State<main_page> {
                 SizedBox(height: 25,)
                   ,FlatButton(onPressed: (){
                     restart_game();
+                    const snackBar1 = SnackBar(content: Text('Game Board has been ReSet'),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar1);
+
                     setState(() {
 
                     });
